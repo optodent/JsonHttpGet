@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">JsonHttpGet</string>
+    <string name="action_settings">Settings</string>
+    <string name="json_strings">Click the button for next joke</string>
+    <string name="next_joke">Next joke</string>
+
+</resources>
