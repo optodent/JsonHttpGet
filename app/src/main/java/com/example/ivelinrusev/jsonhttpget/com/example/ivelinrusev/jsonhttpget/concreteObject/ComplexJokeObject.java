@@ -11,7 +11,7 @@ public class ComplexJokeObject implements Serializable{
 
     private int id;
     private String joke;
-    private int[] categories;
+    private String[] categories;
 
     public String getJoke() {
         return joke;
@@ -38,11 +38,11 @@ public class ComplexJokeObject implements Serializable{
         this.id = id;
     }
 
-    public int[] getCategories() {
+    public String[] getCategories() {
         return categories;
     }
 
-    public void setCategories(int[] categories) {
+    public void setCategories(String[] categories) {
         this.categories = categories;
     }
 }
