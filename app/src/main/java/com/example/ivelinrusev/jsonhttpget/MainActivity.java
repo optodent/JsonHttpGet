@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ivelinrusev.jsonhttpget.com.example.ivelinrusev.jsonhttpget.concreteObject.JokeObject;
+import com.google.gson.Gson;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -24,9 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -89,7 +96,6 @@ public class MainActivity extends ActionBarActivity {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
-
         private String downloadUrl(String param) throws  IOException{
 
             StringBuilder builder = new StringBuilder();
@@ -115,12 +121,21 @@ public class MainActivity extends ActionBarActivity {
                     JSONObject extractedObjectByValue = jsonObject.getJSONObject("value");
                     joke = extractedObjectByValue.getString("joke");
 
+                    Gson gs = new Gson();
+                    JokeObject jo = gs.fromJson(builder.toString(), JokeObject.class);
+                    Log.i(getClass().getSimpleName(), jo.toString());
+
+                    jo.serializeObject(MainActivity.this, "joke.ser");
+                    jo.deserializeObject(MainActivity.this, "joke.ser");
+
+                    Log.i(getClass().getSimpleName(), jo.toString());
+
 
                 } else {
                     Log.e(MainActivity.class.toString(), "Failed JSON object");
                 }
             }catch(ClientProtocolException e){
-                e.printStackTrace();
+                Log.e(getClass().getSimpleName(), "Get joke failed", e);
             } catch (IOException e){
                 Log.e(getClass().getSimpleName(), "Get joke failed", e);
             } catch (JSONException e) {
@@ -129,6 +144,7 @@ public class MainActivity extends ActionBarActivity {
 
             return joke;
         }
+
 
         protected void onPostExecute(String result) {
             textView.setText(result);
