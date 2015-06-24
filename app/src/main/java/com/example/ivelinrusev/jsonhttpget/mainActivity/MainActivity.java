@@ -1,6 +1,7 @@
 package com.example.ivelinrusev.jsonhttpget.mainActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ivelinrusev.jsonhttpget.R;
+import com.example.ivelinrusev.jsonhttpget.allJokesActivity.AllJokesActivity;
 import com.example.ivelinrusev.jsonhttpget.contracts.JokesAPI;
 import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokeDB;
 import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokesDataSource;
@@ -137,8 +139,12 @@ public class MainActivity extends ActionBarActivity {
     public void viewAllJokes(View view) {
 
 
-        List<JokeDB> list = new ArrayList<JokeDB>();
+        ArrayList<JokeDB> list = new ArrayList<JokeDB>();
         list = dataSource.getAllJokes();
+        Intent intent = new Intent(this, AllJokesActivity.class);
+        intent.putExtra("list", list);
+
+
 
 
 

@@ -52,9 +52,9 @@ public class JokesDataSource {
                 + " = " + id, null);
     }
 
-    public List<JokeDB> getAllJokes() {
+    public ArrayList<JokeDB> getAllJokes() {
 
-        List<JokeDB> jokes = new ArrayList<JokeDB>();
+        ArrayList<JokeDB> jokes = new ArrayList<JokeDB>();
         Cursor cursor = database.query(SQLiteHelper.TABLE_NAME, allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
