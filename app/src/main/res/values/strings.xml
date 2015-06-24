@@ -4,5 +4,9 @@
     <string name="action_settings">Settings</string>
     <string name="json_strings">Click the button for next joke</string>
     <string name="next_joke">Next joke</string>
+    <string name="view_all_jokes_text">View All Jokes</string>
+    <string name="title_activity_all_jokes">allJokesActivity</string>
+    <string name="list_all_jokes">List of all jokes in database</string>
+
 
 </resources>

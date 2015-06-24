@@ -11,7 +11,6 @@
     tools:context=".MainActivity">
 
     <TextView
-
         android:text="@string/json_strings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,10 +18,18 @@
         android:textSize="20sp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/next_joke"
         android:onClick="getJsonHttp"
         android:id="@+id/getJSON"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/view_all_jokes_text"
+        android:onClick="viewAllJokes"
+        android:id="@+id/view_joke_id_button"/>
+
 
 </LinearLayout>
