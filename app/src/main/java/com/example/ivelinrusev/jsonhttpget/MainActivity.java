@@ -90,6 +90,21 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putString("jokeGson", gs.toJson(jokeObject));
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+        jokeObject = gs.fromJson(savedInstanceState.getString("jokeGson"), JokeObject.class);
+        textView.setText(jokeObject.getValue().getJoke());
+    }
+
 //    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 //        @Override
 //        protected String doInBackground(String... params) {
