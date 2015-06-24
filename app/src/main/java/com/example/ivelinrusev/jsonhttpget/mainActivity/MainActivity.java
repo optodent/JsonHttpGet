@@ -143,6 +143,7 @@ public class MainActivity extends ActionBarActivity {
         list = dataSource.getAllJokes();
         Intent intent = new Intent(this, AllJokesActivity.class);
         intent.putExtra("list", list);
+        startActivity(intent);
 
 
 

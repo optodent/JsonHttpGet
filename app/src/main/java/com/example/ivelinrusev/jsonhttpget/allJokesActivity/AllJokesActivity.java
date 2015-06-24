@@ -1,5 +1,6 @@
 package com.example.ivelinrusev.jsonhttpget.allJokesActivity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.ivelinrusev.jsonhttpget.R;
+import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokeDB;
+
+import java.util.ArrayList;
 
 public class AllJokesActivity extends ActionBarActivity {
 
@@ -17,6 +21,12 @@ public class AllJokesActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_jokes);
         textView = (TextView)findViewById(R.id.top_bar_view);
+        ArrayList<JokeDB> list = new ArrayList<JokeDB>();
+        list = (ArrayList<JokeDB>)getIntent().getSerializableExtra("list");
+        textView.setText(list.get(0).toString());
+
+
+
 
     }
 
