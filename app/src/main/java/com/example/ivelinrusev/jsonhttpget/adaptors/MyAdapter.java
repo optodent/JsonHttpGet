@@ -15,7 +15,7 @@ public class MyAdapter extends ArrayAdapter<String>{
     public MyAdapter(Context context,String[] list) {
 
 
-        super(context, R.layout.adaptor_layout, list);
+        super(context, R.layout.list_item, list);
 
     }
     @Override
@@ -23,7 +23,7 @@ public class MyAdapter extends ArrayAdapter<String>{
 
 
         LayoutInflater theInflater = LayoutInflater.from(getContext());
-        View theView = theInflater.inflate(R.layout.adaptor_layout, parent, false);
+        View theView = theInflater.inflate(R.layout.list_item, parent, false);
 
         String tvShow = getItem(position);
         TextView theTextView = (TextView)theView.findViewById(R.id.textView1);
