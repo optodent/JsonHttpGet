@@ -37,10 +37,8 @@ public class JokeDB implements Serializable{
 
     @Override
     public String toString() {
-        return "JokeDB{" +
-                "id=" + id +
-                ", joke='" + joke + '\'' +
-                ", category='" + category + '\'' +
-                '}';
+
+        String category = this.category == null ? "No category" : this.category.replace(this.category.charAt(0), (char)(this.category.charAt(0)-32));
+        return joke +" "+ category;
     }
 }

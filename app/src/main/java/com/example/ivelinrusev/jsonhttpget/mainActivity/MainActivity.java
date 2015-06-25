@@ -120,19 +120,17 @@ public class MainActivity extends ActionBarActivity {
 
         super.onRestoreInstanceState(savedInstanceState);
         jokeObject = gs.fromJson(savedInstanceState.getString("jokeGson"), JokeObject.class);
-        textView.setText(jokeObject.getValue().getJoke());
+        textView.setText(jokeObject.getValue() == null ? "Click the button for next joke" : jokeObject.getValue().getJoke());
     }
 
     private void insertJokeInDataBase() {
 
         JokeDB joke = null;
         context  = getApplicationContext();
-        Log.i(getClass().getSimpleName(), jokeObject.toString());
         joke = dataSource.createJoke(jokeObject.getValue().getJoke(),
                 jokeObject.getValue().getCategories().length == 0 ? null : jokeObject.getValue().getCategories()[0]);
         Toast toast = Toast.makeText(context, "Joke added successful", Toast.LENGTH_SHORT);
         toast.show();
-
 
     }
 
