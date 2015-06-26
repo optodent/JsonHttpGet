@@ -3,27 +3,24 @@ package com.example.ivelinrusev.jsonhttpget.allJokesActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ivelinrusev.jsonhttpget.R;
-import com.example.ivelinrusev.jsonhttpget.adaptors.MyAdapter;
 import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokeDB;
 import com.example.ivelinrusev.jsonhttpget.mainActivity.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class AllJokesActivity extends ActionBarActivity {
@@ -31,6 +28,8 @@ public class AllJokesActivity extends ActionBarActivity {
     private ListView listView;
     private ArrayAdapter theAdapter;
     private EditText inputSearch;
+    private Toolbar toolbar;
+    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +42,18 @@ public class AllJokesActivity extends ActionBarActivity {
         theAdapter = new ArrayAdapter<String>(this ,R.layout.text_view, jokesToStringArray(list));
 
         listView.setAdapter(theAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        listView.setLongClickable(true);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
-                String tvShowPicked = "You selected " + String.valueOf(parent.getItemAtPosition(position));
-                Toast.makeText(AllJokesActivity.this, tvShowPicked, Toast.LENGTH_SHORT).show();
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+
+                Log.v("long clicked", "pos: " + pos);
+                return true;
             }
         });
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -94,11 +97,14 @@ public class AllJokesActivity extends ActionBarActivity {
             return true;
         }
 
+        if(id == R.id.navigate){
+          Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private String[] jokesToStringArray(ArrayList<JokeDB> list){
-
 
         Iterator iterator = list.iterator();
         String[] jokes = new String[list.size()];

@@ -99,6 +99,7 @@ public class MainActivity extends ActionBarActivity {
                 textView.setText(jokeObject.getValue().getJoke());
                 insertJokeInDataBase();
             }
+
             @Override
             public void failure(RetrofitError error) {
                 textView.setText("whoops,something went wrong. Try again later.");
@@ -129,7 +130,13 @@ public class MainActivity extends ActionBarActivity {
         context  = getApplicationContext();
         joke = dataSource.createJoke(jokeObject.getValue().getJoke(),
                 jokeObject.getValue().getCategories().length == 0 ? null : jokeObject.getValue().getCategories()[0]);
-        Toast toast = Toast.makeText(context, "Joke added successful", Toast.LENGTH_SHORT);
+        Toast toast;
+        if(joke == null){
+            toast = Toast.makeText(context, "Joke already exist in database", Toast.LENGTH_SHORT);
+        }else{
+            toast = Toast.makeText(context, "Joke successfully added", Toast.LENGTH_SHORT);
+        }
+
         toast.show();
 
     }

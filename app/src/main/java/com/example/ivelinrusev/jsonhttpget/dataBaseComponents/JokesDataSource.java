@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,18 @@ public class JokesDataSource {
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.COLUMN_JOKE, joke);
         values.put(SQLiteHelper.COLUMN_CATEGORY, category);
-        long insertId = database.insert(SQLiteHelper.TABLE_NAME, null, values);
-        Cursor cursor = database.query(SQLiteHelper.TABLE_NAME, allColumns,
-                SQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
-        cursor.moveToFirst();
-        JokeDB newJoke = cursorToJoke(cursor);
-        cursor.close();
-        return newJoke;
+
+        boolean isPresent = isPresentJoke(joke);
+        if (!isPresent){
+            long insertId = database.insert(SQLiteHelper.TABLE_NAME, null, values);
+            Cursor cursor = database.query(SQLiteHelper.TABLE_NAME, allColumns,
+                    SQLiteHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
+            cursor.moveToFirst();
+            JokeDB newJoke = cursorToJoke(cursor);
+            cursor.close();
+            return newJoke;
+        }
+        return null;
     }
 
     public void deleteJoke(JokeDB joke) {
@@ -65,6 +71,19 @@ public class JokesDataSource {
         }
         cursor.close();
         return jokes;
+    }
+
+    private boolean isPresentJoke(String joke){
+
+        String query = "select * from jokes where joke = " +"\""+joke.trim()+"\"";
+        Cursor cursor = database.rawQuery(query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+
     }
 
     private JokeDB cursorToJoke(Cursor cursor) {

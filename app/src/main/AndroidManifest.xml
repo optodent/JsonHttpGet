@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".allJokesActivity.AllJokesActivity"
+            android:theme="@style/AppThemeNoBar"
             android:label="@string/title_activity_all_jokes"
             android:windowSoftInputMode="stateHidden">
         </activity>
