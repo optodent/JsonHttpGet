@@ -43,17 +43,23 @@ public class AllJokesActivity extends ActionBarActivity {
 
         listView.setAdapter(theAdapter);
         listView.setLongClickable(true);
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-                Log.v("long clicked", "pos: " + pos);
+                MyActionModeCallBack callback = new MyActionModeCallBack();
+                toolbar.setVisibility(View.INVISIBLE);
+                actionMode = startActionMode(callback);
                 return true;
+
             }
         });
 
+
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -113,5 +119,30 @@ public class AllJokesActivity extends ActionBarActivity {
             jokes[index++] = iterator.next().toString();
         }
         return jokes;
+    }
+
+    private class MyActionModeCallBack implements  ActionMode.Callback{
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.context, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            actionMode.getCustomView();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            toolbar.setVisibility(View.VISIBLE);
+        }
     }
 }
