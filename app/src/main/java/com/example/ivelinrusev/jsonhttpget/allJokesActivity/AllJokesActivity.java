@@ -116,7 +116,6 @@ public class AllJokesActivity extends ActionBarActivity {
         } else{
             listView.setItemChecked(pos, true);
             selectedItems.put(pos, true);
-            Log.i(getClass().getSimpleName(), selectedItems.toString());
         }
 
     }
@@ -158,19 +157,6 @@ public class AllJokesActivity extends ActionBarActivity {
         return jokes;
     }
 
-
-
-
-    private  JokeDB getJokeByValue(String str){
-
-        for(JokeDB joke : list){
-            if (str.contains(joke.getJoke())){
-                return joke;
-            }
-        }
-        return null;
-    }
-
     private class MyActionModeCallBack implements  ActionMode.Callback{
 
         @Override
@@ -189,15 +175,21 @@ public class AllJokesActivity extends ActionBarActivity {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 
+
             switch (item.getItemId()) {
                 case R.id.delete:
-
+                    ArrayList<JokeDB> itemsToBeRemoved = new ArrayList<JokeDB>();
                     for(Integer i : selectedItems.keySet()){
 
                         theAdapter.remove(list.get(i).toString());
                         dataSource.deleteJoke(list.get(i));
                         listView.setItemChecked(i, false);
+                        itemsToBeRemoved.add(list.get(i));
+
                     }
+
+                    list.removeAll(itemsToBeRemoved);
+                    itemsToBeRemoved.clear();
                     selectedItems.clear();
                     actionMode.finish();
                     Toast.makeText(getBaseContext(), "Selected items removed", Toast.LENGTH_SHORT).show();
