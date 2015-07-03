@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,8 +18,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ivelinrusev.jsonhttpget.R;
-import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokeDB;
-import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.JokesDataSource;
+import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.DatabaseHelper;
+import com.example.ivelinrusev.jsonhttpget.dataBaseComponents.Joke;
 import com.example.ivelinrusev.jsonhttpget.mainActivity.MainActivity;
 import com.example.ivelinrusev.jsonhttpget.adaptors.CustomJokeAdapter;
 
@@ -36,8 +35,8 @@ public class AllJokesActivity extends ActionBarActivity {
     private EditText inputSearch;
     private Toolbar toolbar;
     private ActionMode actionMode;
-    private JokesDataSource dataSource;
-    private ArrayList<JokeDB> list;
+    private DatabaseHelper helper;
+    private ArrayList<Joke> list;
     private HashMap<Integer, Boolean> selectedItems;
 
     @Override
@@ -47,14 +46,13 @@ public class AllJokesActivity extends ActionBarActivity {
         setContentView(R.layout.activity_all_jokes);
         listView = (ListView)findViewById(R.id.list_item);
         inputSearch = (EditText)findViewById(R.id.input_search);
-        list = (ArrayList<JokeDB>)getIntent().getSerializableExtra("list");
+        list = (ArrayList<Joke>)getIntent().getSerializableExtra("list");
         selectedItems = new HashMap<>();
         theAdapter = new CustomJokeAdapter(this ,R.layout.text_view, jokesToStringArray(list), selectedItems);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(theAdapter);
         listView.setLongClickable(true);
-        dataSource = new JokesDataSource(this);
-        dataSource.open();
+        helper = new DatabaseHelper(getApplicationContext());
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
@@ -147,7 +145,7 @@ public class AllJokesActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private ArrayList<String> jokesToStringArray(ArrayList<JokeDB> list){
+    private ArrayList<String> jokesToStringArray(ArrayList<Joke> list){
 
         Iterator iterator = list.iterator();
         ArrayList<String> jokes = new ArrayList<String>();
@@ -178,11 +176,12 @@ public class AllJokesActivity extends ActionBarActivity {
 
             switch (item.getItemId()) {
                 case R.id.delete:
-                    ArrayList<JokeDB> itemsToBeRemoved = new ArrayList<JokeDB>();
+                    ArrayList<Joke> itemsToBeRemoved = new ArrayList<Joke>();
                     for(Integer i : selectedItems.keySet()){
 
                         theAdapter.remove(list.get(i).toString());
-                        dataSource.deleteJoke(list.get(i));
+                        //dataSource.deleteJoke(list.get(i));
+                        helper.removeData(list.get(i));
                         listView.setItemChecked(i, false);
                         itemsToBeRemoved.add(list.get(i));
 

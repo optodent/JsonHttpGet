@@ -10,9 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-/**
- * Created by ivelin.rusev on 6/22/2015.
- */
 public class JokeObject implements Serializable{
 
     private String type;
@@ -80,10 +77,4 @@ public class JokeObject implements Serializable{
                 '}';
     }
 
-    //   static factory
-//    public static JokeObject createJokeFromJson(Gson gson){
-//
-//        JokeObject obj = new JokeObject();
-//        return null;
-//    }
 }

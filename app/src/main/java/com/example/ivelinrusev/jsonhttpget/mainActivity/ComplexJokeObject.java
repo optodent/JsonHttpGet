@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class ComplexJokeObject implements Serializable{
 
 
-    private int id;
+    private long id;
     private String joke;
     private String[] categories;
 
@@ -30,7 +30,7 @@ public class ComplexJokeObject implements Serializable{
         this.joke = joke;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
